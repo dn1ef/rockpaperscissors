@@ -45,23 +45,6 @@ function determineSelection(player) {
     }
 }
 
-function cpuSelection(cpu) {
-    switch(cpu) {
-        case 1:
-            return 'rock';
-            break;
-        case 2:
-            return 'paper';
-            break;
-        case 3:
-            return 'scissors';
-            break;
-        default:
-            return "Error, could not figure out CPU choice."
-    }               
-}
-
-
 function playRound(playerSelection) {
     playerChoice = playerSelection;
     let player = determineSelection(playerSelection); 
