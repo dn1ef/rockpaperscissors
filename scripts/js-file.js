@@ -56,10 +56,3 @@ function playRound(playerSelection) {
     }      
 }
 
-
-function game() {
-    for (let i = 0; i < 5; i++) {
-       console.log(playRound(prompt('Rock, Paper, or Scissors?'))); 
-    }
-    return "Game over!";
-}
