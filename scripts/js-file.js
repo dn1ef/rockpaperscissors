@@ -1,6 +1,12 @@
-const buttons = document.querySelectorAll('button');
 let playerChoice;
 let cpuChoice = [{choice: 'rock', value: 1 }, {choice: 'paper', value: 2 }, {choice: 'scissors', value: 3 }];
+let playerScore = 0;
+let cpuScore = 0;
+
+const buttons = document.querySelectorAll('button');
+const output = document.querySelector('#result');
+const you = document.querySelector('#you');
+const computer = document.querySelector('#cpu'); 
 
 function computerPlay() {
     return cpuChoice[Math.floor(Math.random() * cpuChoice.length)];
@@ -19,13 +25,27 @@ function determineWinner(player, cpu) {
     }
 
     if (parseInt(player) === cpu.value && win != 1) {
-        return `Tied! Both players chose ${cpu.choice}!`;
+        output.textContent = `Tied! Both players chose ${cpu.choice}!`;
     } else if (win != 1) {
-        return `You lost! ${cpu.choice[0].toUpperCase() + (cpu.choice).slice(1)} beats ${playerChoice}.`;
+        output.textContent = `You lost! ${cpu.choice[0].toUpperCase() + (cpu.choice).slice(1)} beats ${playerChoice}.`;
+        if (cpuScore === 5) {
+            computer.textContent = `CPU: ${cpuScore++}`;
+            let message = output.textContent = `Game over! The CPU won!`;
+            gameOver(message);
+        } else {
+            computer.textContent = `CPU: ${cpuScore++}`;
+        }
     } else if (win === 1) {
-        return `You win! ${playerChoice[0].toUpperCase() + playerChoice.slice(1)} beats ${cpu.choice}.`;
+        output.textContent = `You win! ${playerChoice[0].toUpperCase() + playerChoice.slice(1)} beats ${cpu.choice}.`;
+        if (playerScore === 5) {
+            you.textContent = `You: ${playerScore++}`;
+            let message = output.textContent = `Game over! You won!`;
+            gameOver(message);
+        } else {
+            you.textContent = `You: ${playerScore++}`;
+        }
     } else {
-        return `Error, could not determine winner of round.`;
+        output.textContent = `Error, could not determine winner of round.`;
     }
 
 }
@@ -47,12 +67,23 @@ function determineSelection(player) {
 }
 
 function playRound(playerSelection) {
-    console.log(determineWinner(playerSelection, computerPlay()));
+    return determineWinner(playerSelection, computerPlay());
 }
+
+function gameOver(message) {
+    playerScore = 0;
+    cpuScore = 0;
+    you.textContent = `You: ${playerScore++}`;
+    computer.textContent = `CPU: ${cpuScore++}`;
+    output.textContent = message;
+}
+
+you.textContent = `You: ${playerScore++}`;
+computer.textContent = `CPU: ${cpuScore++}`;
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        playerChoice = determineSelection(button.id)
-        playRound(button.id);
+            playerChoice = determineSelection(button.id)
+            playRound(button.id);
     });
 });
