@@ -1,3 +1,4 @@
+const buttons = document.querySelectorAll('button');
 let playerChoice;
 let cpuChoice = [{choice: 'rock', value: 1 }, {choice: 'paper', value: 2 }, {choice: 'scissors', value: 3 }];
 
@@ -14,11 +15,11 @@ function determineWinner(player, cpu) {
         if (roundCompare === winner) {
             win = 1; 
             break;
-        }
+            }
     }
 
-    if (player === cpu.value && win != 1) {
-        return `Tied!`;
+    if (parseInt(player) === cpu.value && win != 1) {
+        return `Tied! Both players chose ${cpu.choice}!`;
     } else if (win != 1) {
         return `You lost! ${cpu.choice[0].toUpperCase() + (cpu.choice).slice(1)} beats ${playerChoice}.`;
     } else if (win === 1) {
@@ -30,29 +31,28 @@ function determineWinner(player, cpu) {
 }
 
 function determineSelection(player) {
-    switch(player.toLowerCase()) {
-        case 'rock':
-            return 1;
+    switch(parseInt(player)) {
+        case 1:
+            return 'rock';
             break;
-        case 'paper':
-            return 2;
+        case 2:
+            return 'paper';
             break;
-        case 'scissors':
-            return 3;
+        case 3:
+            return 'scissors';
             break;
         default:
-            return "Error, could not determine player decision.";
+            return "ERROR";
     }
 }
 
 function playRound(playerSelection) {
-    playerChoice = playerSelection;
-    let player = determineSelection(playerSelection); 
-
-    if (player == 1 || player == 2 || player == 3) {
-        return determineWinner(player, computerPlay());
-    } else {
-        return "Error - only type 'rock', 'paper', or 'scissors'.";
-    }      
+    console.log(determineWinner(playerSelection, computerPlay()));
 }
 
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playerChoice = determineSelection(button.id)
+        playRound(button.id);
+    });
+});
